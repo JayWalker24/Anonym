@@ -1,9 +1,28 @@
-# app.py
-from flask import Flask           # import flask
-app = Flask(__name__)             # create an app instance
+from flask import Flask     
+from flask import request
+from flask import jsonify
 
-@app.route("/")                   # at the end point /
-def hello():                      # call method hello
-    return "Hello World!"         # which returns "hello world"
-if __name__ == "__main__":        # on running python app.py
-    app.run()                     # run the flask app
+app = Flask(__name__)     
+
+@app.route("/")                   
+def hello():                    
+    return "Bruh!"       
+
+'''
+Python back end is running on localhost:5000
+UI is running on localhost:3000. but using an alias to 
+appear as localhost:5000
+'''
+@app.route("/api", methods=['GET','POST'])
+def processData():
+    if request.method == 'GET':
+        return "It works!"
+
+    if request.method == 'POST':
+        response = request.json
+        print(response)
+        return jsonify(response)
+
+
+if __name__ == "__main__":        
+    app.run(host = 'localhost')                     

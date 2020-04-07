@@ -21,7 +21,7 @@ export default class Form extends React.Component {
             callReason: this.state.callReason
         }
 
-        axios.post(`https://jsonplaceholder.typicode.com/users`, { data })
+        axios.post(`/api`, { data })
             .then(res => {
                 console.log(res);
                 console.log(res.data);
