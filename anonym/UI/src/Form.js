@@ -21,7 +21,7 @@ export default class Form extends React.Component {
             callReason: this.state.callReason
         }
 
-        axios.post(`/api`, { data })
+        axios.post(`http://localhost:5000/api`, { data })
             .then(res => {
                 console.log(res);
                 console.log(res.data);
