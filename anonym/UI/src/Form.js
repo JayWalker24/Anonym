@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 
 export default class Form extends React.Component {
 
@@ -13,6 +14,18 @@ export default class Form extends React.Component {
     onSubmit = e => {
         e.preventDefault();
         console.log(this.state)
+        
+        const data = {
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            callReason: this.state.callReason
+        }
+
+        axios.post(`https://jsonplaceholder.typicode.com/users`, { data })
+            .then(res => {
+                console.log(res);
+                console.log(res.data);
+        })
     }
 
     render(){
