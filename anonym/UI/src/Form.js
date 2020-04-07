@@ -22,17 +22,17 @@ export default class Form extends React.Component {
                 value = {this.state.firstName}
                 onChange = {e => this.setState({firstName: e.target.value})}
                 />
-                <br/>
+                    <br/>
                 <input placeholder='Last Name' 
                 value = {this.state.lastName}
                 onChange = {e => this.setState({lastName: e.target.value})}
                 />
-                <br/>
+                    <br/>
                 <input placeholder='Reporting' 
                 value = {this.state.callReason}
                 onChange = {e => this.setState({callReason: e.target.value})}
                 />
-                <br/>
+                    <br/>
                 <button onClick={e => this.onSubmit(e)}>Submit</button>
             </form>
         )
