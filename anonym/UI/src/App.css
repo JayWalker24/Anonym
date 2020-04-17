@@ -28,6 +28,47 @@
   color: #61dafb;
 }
 
+.chatMessage{
+  border-style: solid;
+  display: inline-block;
+  margin-left: 80px;
+  padding: 25px;
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+  border-radius: .25rem;
+}
+
+.replyMessage{
+  border-style: solid;
+  margin-left: 80px;
+  padding: 25px;
+  color: #fff;
+  background-color: #44be73;
+  border-color: #44be73;
+  border-radius: .25rem;
+  float:right;
+  margin-right: 100px;
+}
+
+.proPic{
+  width: 7%;
+  border-radius: 50%;
+}
+
+
+.mainBody{
+  background-image: linear-gradient(to right, rgba(255,0,0,0), rgb(127, 127, 247));
+  height: 100%;
+}
+
+.textBox{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
