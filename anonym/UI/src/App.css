@@ -41,14 +41,13 @@
 
 .replyMessage{
   border-style: solid;
-  margin-left: 80px;
+  display: inline-block;
   padding: 25px;
   color: #fff;
   background-color: #44be73;
   border-color: #44be73;
   border-radius: .25rem;
-  float:right;
-  margin-right: 100px;
+  margin-left: 800px;
 }
 
 .proPic{
