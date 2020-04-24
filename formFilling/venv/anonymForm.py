@@ -92,14 +92,18 @@ def testJSONtoPDF():
     json_data = json.dumps(data)
     return json_data
 
-
-if __name__ == '__main__':
-
+def createReport(report):
     ## Comment below out when we figure this shit out
+    data = report.get('report')
+    print("Creating Report")
+    print()
     json_data = testJSONtoPDF()
-
-    create_overlay(json_data)
+    report_data = json.dumps(data)
+    print(json_data)
+    #create_overlay(report.get('report'))
+    create_overlay(report_data)
     merge_pdfs('policeReport.pdf',
                'simple_form_overlay.pdf',
                'merged_form.pdf')
     #pypdftk.fill_form('merged_form.pdf', out_file='merged_form_final.pdf', flatten=True)
+

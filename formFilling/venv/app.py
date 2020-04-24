@@ -2,6 +2,7 @@ from flask import Flask
 from flask import request
 from flask import jsonify
 from flask_cors import CORS
+import anonymForm
 
 app = Flask(__name__)     
 CORS(app)
@@ -22,9 +23,9 @@ def processData():
 
     if request.method == 'POST':
         response = request.json
-        print(response)
+        anonymForm.createReport(response)  
         return jsonify(response)
 
 
-if __name__ == "__main__":        
+if __name__ == "__main__":
     app.run(host = 'localhost')                     
