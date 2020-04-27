@@ -10,7 +10,7 @@ Able to read the information a user entered and passed to GMapsAPI to be deconst
 import googlemaps
 from datetime import datetime
 
-gmaps = googlemaps.Client(key = "AIzaSyAhOMsolxM3li88CYoMjOdnCjCWNKbGQag")
+gmaps = googlemaps.Client(key = "#############")
 
 
 class ReportLocation:
