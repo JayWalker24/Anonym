@@ -86,7 +86,7 @@ class App extends React.Component {
         {messageType:"chatMessage",message:"Hello, how can I assist you?", picVis:"visible"}
       ],
       counter: 0,
-      complete: 1
+      complete: 0
     };
     this.updateMessages = this.updateMessages.bind(this)
   }
@@ -111,7 +111,6 @@ class App extends React.Component {
     this.setState({
       complete: 2
     })
-    console.log(report)
 
     axios.post(`http://localhost:5000/api`, { report })
             .then(res => {
@@ -148,13 +147,19 @@ class App extends React.Component {
         reply = {messageType:"chatMessage",message:"The report is complete to be submitted", picVis:"visible"}
         break;
     }
-
-    this.setState({
-      messageLog: [...this.state.messageLog,newMessage,reply],
-      counter:this.state.counter+1
-    })
+    if(this.state.counter<6){
+      this.setState({
+        messageLog: [...this.state.messageLog,newMessage,reply],
+        counter:this.state.counter+1
+      })
+    }else{
+      this.setState({
+        messageLog: [...this.state.messageLog,newMessage,reply],
+        counter:this.state.counter+1,
+        complete: 1
+      })
+    }
   }
-
   render() {
 
     if(this.state.complete===0){
@@ -171,7 +176,6 @@ class App extends React.Component {
         <div className="mainBody">
           <Header/>
           <Message meslog={this.state.messageLog} />
-          <SendBar messageUpdater={this.updateMessages}/>
           <Button color="danger" size="lg" active onClick={e => this.finalSubmit(e)}>Submit Report</Button>
         </div>
         );

@@ -1,0 +1,44 @@
+{"intents": [
+        {"tag": "greeting",
+         "patterns": ["Hi there", "How are you", "Is anyone there?","Hey","Hola", "Hello", "Good day"],
+         "responses": ["Hi there, how can I help?","Hello"],
+         "context": [""]
+        },
+        {"tag": "goodbye",
+         "patterns": ["Bye", "See you later", "Goodbye", "Nice chatting to you, bye", "Till next time"],
+         "responses": ["See you!", "Have a nice day", "Bye! Come back again soon."],
+         "context": [""]
+        },
+        {"tag": "thanks",
+         "patterns": ["Thanks", "Thank you", "That's helpful", "Awesome, thanks", "Thanks for helping me"],
+         "responses": ["Happy to help!", "Any time!", "My pleasure"],
+         "context": [""]
+        },
+        {"tag": "noanswer",
+         "patterns": [],
+         "responses": ["Sorry, can't understand you", "Please give me more info", "Not sure I understand"],
+         "context": [""]
+        },
+        {"tag": "options",
+         "patterns": ["How you could help me?", "What you can do?", "What help you provide?", "How you can be helpful?", "What support is offered"],
+         "responses": ["I can guide you through the process of anonymously filling out a police report"],
+         "context": [""]
+        },
+        {"tag": "question",
+         "patterns": ["Who are you?", "How do you work?", "What are you?", "Are you real?"],
+         "responses": ["I am an artificial intelligence created through deep learning to assist you"],
+         "context": [""]
+        },
+        {"tag": "report",
+         "patterns": ["I witnessed an accident","I saw a crime", "I want to report an accident", "Someone was just assaulted",
+        "I saw an attack","There was an accident"],
+         "responses": ["Can you give more information?"],
+         "context": [""]
+        },
+        {"tag": "datetime",
+         "patterns": ["It happened last night", "It was last week", "It occurred last month", "I was awalking down the street yesterday", "I went for a jog a while back"],
+         "responses": ["Do you know the exact time?"],
+         "context": [""]
+        }
+   ]
+}

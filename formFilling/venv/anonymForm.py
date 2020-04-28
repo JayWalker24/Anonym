@@ -96,10 +96,11 @@ def createReport(report):
     ## Comment below out when we figure this shit out
     data = report.get('report')
     print("Creating Report")
-    print()
     json_data = testJSONtoPDF()
-    report_data = json.dumps(data)
-    print(json_data)
+    report_data = json.dumps(data, indent = 4)
+    with open("report.json", "w") as outfile: 
+        outfile.write(report_data) 
+    print(report)
     #create_overlay(report.get('report'))
     create_overlay(report_data)
     merge_pdfs('policeReport.pdf',
