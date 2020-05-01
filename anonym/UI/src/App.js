@@ -67,7 +67,6 @@ class SendBar extends React.Component {
     Message is send every time the user presses enter and it is parsed by the NLP backend. But we can still 
     call messageupdater on whatever the function returns without hardcoding anything? 
 
-
     this.props.messageUpdater({messageType:"replyMessage",message:this.state.text, picVis:"hidden"})
     this.setState({text:""})
      */

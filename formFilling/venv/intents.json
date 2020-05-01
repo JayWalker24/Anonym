@@ -1,0 +1,71 @@
+{"intents": [
+        {"tag": "greeting",
+         "patterns": ["Hi there", "How are you", "Is anyone there?","Hey","Hola", "Hello", "Good day"],
+         "responses": ["Hi there, how can I help?","Hello"],
+         "context": [""]
+        },
+        {"tag": "goodbye",
+         "patterns": ["Bye", "See you later", "Goodbye", "Nice chatting to you, bye", "Till next time"],
+         "responses": ["See you!", "Have a nice day", "Bye! Come back again soon."],
+         "context": [""]
+        },
+        {"tag": "thanks",
+         "patterns": ["Thanks", "Thank you", "That's helpful", "Awesome, thanks", "Thanks for helping me"],
+         "responses": ["Happy to help!", "Any time!", "My pleasure"],
+         "context": [""]
+        },
+        {"tag": "noanswer",
+         "patterns": [],
+         "responses": ["Sorry, can't understand you", "Please give me more info", "Not sure I understand"],
+         "context": [""]
+        },
+        {"tag": "options",
+         "patterns": ["How you could help me?", "What you can do?", "What help you provide?", "How you can be helpful?", "What support is offered","I need help"],
+         "responses": ["I can guide you through the process of anonymously filling out a police report"],
+         "context": [""]
+        },
+        {"tag": "question",
+         "patterns": ["Who are you?", "How do you work?", "What are you?", "Are you real?"],
+         "responses": ["I am an artificial intelligence created through deep learning to assist you"],
+         "context": [""]
+        },
+        {"tag": "report",
+         "patterns": ["I witnessed an accident","I saw a crime", "I want to report an accident", "Someone was just assaulted","I was",
+        "I saw an attack","There was an accident", "My friend", "My family", "My co-worker", "My best friend", "My lover",
+        "My boyfriend", "My girlfriend", "My mom", "My dad", "My Mother", "My parent", "My Father", "My partner", "My Boss", "My uncle", "My aunt", "My niece", "My nephew",
+        "My grandmother", "My grandfather", "I witnessed a robbery", "I witnessed a fire", "I witnessed a shooting", "I saw a robbery", "I saw a robbery", "I saw a shooting",
+        "I saw a beating", "I saw an assault", "I witnessed a beating", "I witnessed an assault", "I would like to report a crime", "I would like to report an incident", "I saw an accident",
+        "I saw an incident", "My neighbor", "My cousin", "I found a", "I discovered a", "I witnessed", "Running", "Jumping", "Fleeing",
+        "Driving", "Stabbing", "Shooting", "Robbing", "Murdering", "Murder", "Stealing", "Theft", "Arson", "Hit and Run", "Homicide",
+        "Suicide", "killed", "killing", "beating", "jump", "jumped", "fight", "fought", "scuffle", "shoot", "rob", "set", "calling", "call",
+        "Drove", "shot", "stole", "fought", "fled", "ran", "stab", "stabbed", "assault and battery", "played", "play", "drugs", "heroin", "cocaine", "speed",
+        "high", "under the influence", "intoxicated", "drunk", "sick", "yelling", "shout", "there was shouting outside", "yell", "aggressive", "sneaky", "suspicious",
+        "angry", "furious", "scary", "traumatizing"],
+         "responses": ["Can you give more information on the crime itself?"],
+         "context": [""]
+        },
+        {"tag": "suspectDesc",
+        "patterns": ["The suspect looked like", "He looked like", "She looked like", "They looked like", "The suspect was wearing", "He was wearing",
+                "She was wearing", "They were wearing", "A man who", "A woman who", "A suspect who", "A person who", "He had a", "She had a", "They had a",
+                "The suspect had a", "He has a", "She has a", "They have a", "The suspect has a", "His clothes", "Their clothes", "Her clothes", "The suspects clothes",
+                "His weapon", "Her weapon", "Their weapon", "The suspects weapon", "He was", "She was", "They were", "The suspect was", "My attacker", "The criminal", "The guy", "The person",
+                "The person", "The leader", "man", "woman","suspect", "person", "approached", "worker", "doctor", "researcher", "cook", "waiter", "waitress", "buinessman","buinesswoman",
+                "buisnessperson", "drive", "programmer", "escort", "cleaner", "technician", "serviceman","employee","employer"], 
+        "responses": ["Can you give a full detailed report of the suspect(s)"],
+        "context": [""]},
+        {"tag": "datetime",
+        "patterns": ["It happened last night", "It was last week", "It occurred last month", "I was a walking down the street yesterday",
+                 "I went for a jog a while back", "Monday", "Tuesday","Wednesday","Thursday", "Friday", "Saturday","Sunday", "When suddenly something or someone",
+                  "A while ago", "A couple hours", "A few minutes ago", "Some time ago","When", "A bit ago", "Last", "January", "February", "March", "April", "May",
+                   "June", "July", "August", "September", "November", "October","December", "Years ago", "in the evening", "In the afternoon", "at noon"],
+        "responses": ["Do you know the exact date/time and can you write it in the following format: Day/Month/Year Hour:Minutes AM/PM? (Example: 1/8/2019 3:45 AM)"],
+        "context": [""]
+        },
+
+        {"tag": "location",
+                "patterns": ["I was outside of","I was near the","it is located near the", "next to the", "nearby the", "over by the", "on Avenue", "on Street", "out near", "the neighborhood", "around the corner from", "across the street from"],
+                "responses": ["Can you give me an exact address?"],
+                "context": [""]
+        }
+   ]
+}
