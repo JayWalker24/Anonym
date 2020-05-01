@@ -41,12 +41,12 @@
                 "The suspect had a", "He has a", "She has a", "They have a", "The suspect has a", "His clothes", "Their clothes", "Her clothes", "The suspects clothes",
                 "His weapon", "Her weapon", "Their weapon", "The suspects weapon", "He was", "She was", "They were", "The suspect was", "My attacker", "The criminal", "The guy", "The person",
                 "The person", "The leader"],
-        "responses": ["Can you give a full detailed report of the suspect"],
+        "responses": ["Can you give a full detailed report of the suspect(s)"],
         "context": [""]},
         {"tag": "datetime",
-         "patterns": ["It happened last night", "It was last week", "It occurred last month", "I was awalking down the street yesterday", "I went for a jog a while back"],
-         "responses": ["Do you know the exact time?"],
-         "context": [""]
-        }
+                "patterns": ["It happened last night", "It was last week", "It occurred last month", "I was awalking down the street yesterday", "I went for a jog a while back"],
+                "responses": ["Do you know the exact time?"],
+                "context": [""]
+               }
    ]
 }
