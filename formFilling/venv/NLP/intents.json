@@ -40,13 +40,22 @@
                 "She was wearing", "They were wearing", "A man who", "A woman who", "A suspect who", "A person who", "He had a", "She had a", "They had a",
                 "The suspect had a", "He has a", "She has a", "They have a", "The suspect has a", "His clothes", "Their clothes", "Her clothes", "The suspects clothes",
                 "His weapon", "Her weapon", "Their weapon", "The suspects weapon", "He was", "She was", "They were", "The suspect was", "My attacker", "The criminal", "The guy", "The person",
-                "The person", "The leader"],
+                "The person", "The leader", "man", "woman","suspect", "person", "approached", "worker", "doctor", "researcher", "cook", "waiter", "waitress", "buinessman","buinesswoman",
+                 "buisnessperson", "drive", "programmer", "escort", "cleaner", "technician", "serviceman","employee","employer"],
         "responses": ["Can you give a full detailed report of the suspect(s)"],
         "context": [""]},
         {"tag": "datetime",
-                "patterns": ["It happened last night", "It was last week", "It occurred last month", "I was awalking down the street yesterday", "I went for a jog a while back"],
-                "responses": ["Do you know the exact time?"],
+        "patterns": ["It happened last night", "It was last week", "It occurred last month", "I was a walking down the street yesterday",
+                 "I went for a jog a while back", "Monday", "Tuesday","Wednesday","Thursday", "Friday", "Saturday","Sunday", "When suddenly something or someone",
+                  "A while ago", "A couple hours", "A few minutes ago", "Some time ago","When", "A bit ago", "Last", "January", "February", "March", "April", "May",
+                   "June", "July", "August", "September", "November", "October","December", "Years ago", "in the evening", "In the afternoon", "at noon"],
+        "responses": ["Do you know the exact date and time and can you write it in the following format?"],
+        "context": [""]
+        },
+        {"tag": "location",
+                "patterns": ["I was outside of","I was near the","it is located near the", "next to the "],
+                "responses": ["Can you give me an exact address?"],
                 "context": [""]
-               }
+                }
    ]
 }
