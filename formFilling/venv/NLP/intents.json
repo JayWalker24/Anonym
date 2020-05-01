@@ -49,13 +49,13 @@
                  "I went for a jog a while back", "Monday", "Tuesday","Wednesday","Thursday", "Friday", "Saturday","Sunday", "When suddenly something or someone",
                   "A while ago", "A couple hours", "A few minutes ago", "Some time ago","When", "A bit ago", "Last", "January", "February", "March", "April", "May",
                    "June", "July", "August", "September", "November", "October","December", "Years ago", "in the evening", "In the afternoon", "at noon"],
-        "responses": ["Do you know the exact date and time and can you write it in the following format?"],
+        "responses": ["Do you know the exact date/time and can you write it in the following format: Day/Month/Year Hour:Minutes AM/PM? (Example: 1/8/2019 3:45 AM)"],
         "context": [""]
         },
         {"tag": "location",
-                "patterns": ["I was outside of","I was near the","it is located near the", "next to the "],
+                "patterns": ["I was outside of","I was near the","it is located near the", "next to the", "nearby the", "over by the", "Avenue", "Street", "out near", "the neighborhood", "around the corner from", "across the street from"],
                 "responses": ["Can you give me an exact address?"],
                 "context": [""]
-                }
+        }
    ]
 }
