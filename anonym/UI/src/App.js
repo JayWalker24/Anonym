@@ -52,10 +52,25 @@ class SendBar extends React.Component {
 
   onSubmit = e => {
     e.preventDefault();
-    this.props.messageUpdater({messageType:"replyMessage",message:this.state.text, picVis:"hidden"})
+    
+    const sendMessage = {
+      "message": this.state.text
+    }
+
+    axios.post(`http://localhost:5000/message`, { sendMessage })
+            .then(res => {
+                console.log(res);
+        })
     this.setState({text:""})
     
-    
+    /*
+    Message is send every time the user presses enter and it is parsed by the NLP backend. But we can still 
+    call messageupdater on whatever the function returns without hardcoding anything? 
+
+
+    this.props.messageUpdater({messageType:"replyMessage",message:this.state.text, picVis:"hidden"})
+    this.setState({text:""})
+     */
   }
 
   

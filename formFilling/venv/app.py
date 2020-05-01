@@ -26,6 +26,15 @@ def processData():
         anonymForm.createReport(response)  
         return jsonify(response)
 
+@app.route("/message", methods=['GET','POST'])
+def processMessage():
+    if request.method == 'GET':
+        return "It works!"
+
+    if request.method == 'POST':
+        response = request.json
+        print(response)
+        return jsonify(response)
 
 if __name__ == "__main__":
     app.run(host = 'localhost')                     
