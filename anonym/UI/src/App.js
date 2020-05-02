@@ -12,6 +12,33 @@ appreading automatically, add an alt prop to each img, put messages in row objec
 Replace the submission alert with a modal
 */
 
+let report = {
+    "mail_record_to": "",
+    "date_report": "",
+    "time_report": "",
+    "date_crime": "",
+    "location_crime": "",
+    "time_crime": "",
+    "crime_description": "",
+    "suspect_description": ""
+}
+
+let questions = {
+  "Can you give more information on the crime itself?":0,
+  "Can you give a full detailed report of the suspect(s)":0,
+  "Do you know the exact date/time and can you write it in the following format: Day/Month/Year Hour:Minutes AM/PM? (Example: 1/8/2019 3:45 AM)":0,
+  "Can you give me an exact address?":0
+}
+
+let questions2 = [
+  {question:"Can you briefly describe what happened?",value:0},
+  {question:"Was there anyone else present who you believe may be responsible?",value:0},
+  {question:"Can you estimate when these events occured",value:0},
+  {question:"Where did this happen?",value:0}
+]
+
+let previousResponse = ""
+
 const Header = () => {
   return (
     <Jumbotron>
@@ -56,20 +83,51 @@ class SendBar extends React.Component {
     const sendMessage = {
       "message": this.state.text
     }
+    const sendText = this.state.text
+    let recording = false
+    switch(previousResponse) {
+      case "Can you give more information on the crime itself?":
+        report["crime_description"]=sendText
+        questions2[0].value = 1
+        recording = true
+        break;
+      case "Can you give a full detailed report of the suspect(s)":
+        report["suspect_description"]=sendText
+        questions2[1].value = 1
+        recording = true
+        break;
+      case "Do you know the exact date/time and can you write it in the following format: Day/Month/Year Hour:Minutes AM/PM? (Example: 1/8/2019 3:45 AM)":
+        report["date_crime"]=sendText
+        questions2[2].value = 1
+        recording = true
+        break;
+      case "Can you give me an exact address?":
+        report["location_crime"]=sendText
+        questions2[3].value = 1
+        recording = true
+        break;
+      default: 
+        break;
+    }
+    if (recording){
+      let recordingReply = questions2.find(item => item.value == 0)
+      if(recordingReply!=undefined){
+        this.props.messageUpdater({messageType:"replyMessage",message:sendText, picVis:"hidden"},{messageType:"chatMessage",message:recordingReply.question, picVis:"visible"})
+        previousResponse = ""
+      }else{
+        this.props.messageUpdater({messageType:"replyMessage",message:sendText, picVis:"hidden"},{messageType:"chatMessage",message:"Report has been completed", picVis:"visible"})
+        previousResponse = ""
+      }
 
-    axios.post(`http://localhost:5000/message`, { sendMessage })
+    }else{
+      axios.post(`http://localhost:5000/message`, { sendMessage })
             .then(res => {
-                console.log(res);
+                this.props.messageUpdater({messageType:"replyMessage",message:sendText, picVis:"hidden"},{messageType:"chatMessage",message:res.data.answer, picVis:"visible"})
+                previousResponse = res.data.answer
         })
-    this.setState({text:""})
+    }
     
-    /*
-    Message is send every time the user presses enter and it is parsed by the NLP backend. But we can still 
-    call messageupdater on whatever the function returns without hardcoding anything? 
-
-    this.props.messageUpdater({messageType:"replyMessage",message:this.state.text, picVis:"hidden"})
     this.setState({text:""})
-     */
   }
 
   
@@ -106,27 +164,20 @@ class App extends React.Component {
   }
 
   finalSubmit = e => {
-    console.log("Report Submitted")
-    const info = this.state.messageLog
     let today = new Date();
     let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
     let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-    let report = {
-        "lines" : [],
-        "mail_record_to" : "12 Bedford Ave, Brooklyn, NY, 11203", 
-        "date_report" : date, 
-        "time_report": time, 
-        "date_crime" : info[5].message, 
-        "location_crime" : info[9].message, 
-        "time_crime" : info[7].message, 
-        "crime_description" : info[3].message, 
-        "suspect_description" : info[13].message
-    }
+    report.mail_record_to = "12 Bedford Ave, Brooklyn, NY, 11203"
+    report.date_report = date
+    report.time_report = time
+    let crime_date = report.date_crime
+    report.date_crime = crime_date.substring(0,7)
+    report.time_crime = crime_date.substring(9,16)
     this.setState({
       complete: 2
     })
-
-    axios.post(`http://localhost:5000/api`, { report })
+    console.log(report)
+    axios.post(`http://localhost:5000/api`, report )
             .then(res => {
                 console.log(res);
                 console.log(res.data);
@@ -134,48 +185,19 @@ class App extends React.Component {
   }
   
 
-  updateMessages(newMessage){
-
-    let reply = null;
-
-    switch(this.state.counter) {
-      case 0:
-        reply = {messageType:"chatMessage",message:"What type of incident was it?", picVis:"visible"}
-        break;
-      case 1:
-        reply = {messageType:"chatMessage",message:"What was that date that this occured?", picVis:"visible"}
-        break;
-      case 2:
-        reply = {messageType:"chatMessage",message:"What was the approximate time of the incident?", picVis:"visible"}
-        break;
-      case 3:
-          reply = {messageType:"chatMessage",message:"And where did it take place?", picVis:"visible"}
-        break;
-      case 4:
-        reply = {messageType:"chatMessage",message:"Was there anyone else present?", picVis:"visible"}
-        break;
-      case 5:
-        reply = {messageType:"chatMessage",message:"Can you give a description of what they looked like?", picVis:"visible"}
-        break;
-      default:
-        reply = {messageType:"chatMessage",message:"The report is complete to be submitted", picVis:"visible"}
-        break;
-    }
-    if(this.state.counter<6){
+  updateMessages(oldMessage, newMessage){
+    if(newMessage.message=="Report has been completed"){
       this.setState({
-        messageLog: [...this.state.messageLog,newMessage,reply],
-        counter:this.state.counter+1
+        messageLog: [...this.state.messageLog,oldMessage,newMessage],
+        complete: 1
       })
     }else{
       this.setState({
-        messageLog: [...this.state.messageLog,newMessage,reply],
-        counter:this.state.counter+1,
-        complete: 1
+        messageLog: [...this.state.messageLog,oldMessage,newMessage],
       })
     }
   }
   render() {
-
     if(this.state.complete===0){
       return (
         <div className="mainBody">

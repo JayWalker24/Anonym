@@ -26,6 +26,7 @@ intents = json.loads(open('intents.json').read())
 words = pickle.load(open('words.pkl','rb'))
 classes = pickle.load(open('classes.pkl','rb'))
 
+
 app = Flask(__name__)     
 CORS(app)
 
@@ -55,15 +56,16 @@ def processMessage():
 
     if request.method == 'POST':
         response = request.json
-        answer = response.get('sendMessage').get('message')
-        print(send(answer))
-        return jsonify(response)
+        question = response.get('sendMessage').get('message')
+        answer = send(question)
+        return jsonify({"answer":answer})
+
+
 
 def clean_up_sentence(sentence):
     sentence_words = nltk.word_tokenize(sentence)
     sentence_words = [lemmatizer.lemmatize(word.lower()) for word in sentence_words]
     return sentence_words
-
 
 def bow(sentence, words, show_details=True):
     sentence_words = clean_up_sentence(sentence)
@@ -100,7 +102,7 @@ def getResponse(ints, intents_json):
             break
     return result
 
-def chatbot_response(msg):
+def chatbot_response(msg):  
     
     ints = predict_class(msg, model)
     res = getResponse(ints, intents)
@@ -112,6 +114,5 @@ def send(msg):
         return res
 
 if __name__ == "__main__":
-    
     app.run(host = 'localhost')      
     
