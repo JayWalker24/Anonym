@@ -7,6 +7,8 @@ import json
 #import pypdftk
 from reportlab.pdfgen import canvas
 
+from ReportEvaluation.ANONYMReport import ANONYMReport
+
 def error_exit(message):
     sys.stderr.write(message)
     sys.exit(1)
@@ -103,6 +105,10 @@ def createReport(report):
         outfile.write(report_data) 
     print("report: ",report)
     #create_overlay(report.get('report'))
+
+    #EvaluateReport
+    ANONYMReport("report.json")
+    
     create_overlay(report_data)
     merge_pdfs('policeReport.pdf',
                'simple_form_overlay.pdf',
