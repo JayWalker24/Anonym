@@ -10,7 +10,7 @@ Able to read the information a user entered and passed to GMapsAPI to be deconst
 import googlemaps
 from datetime import datetime
 
-gmaps = googlemaps.Client(key = "#############")
+gmaps = googlemaps.Client(key = "#######")
 
 
 class ReportLocation:
@@ -68,8 +68,12 @@ class ReportLocation:
         self.setFullAddress()
  
     def DistanceFrom(self, otherAddress):
-        Distance = float(gmaps.distance_matrix(self.fullAddress,otherAddress)['rows'][0]['elements'][0]['distance']['text'][:-2])
- 
+        fullDistance = gmaps.distance_matrix(self.fullAddress,otherAddress)['rows'][0]['elements'][0]['distance']['text'].replace(",","")
+        Distance = 0
+        if("km" in fullDistance):
+            Distance = float(fullDistance[:-2])*1000
+        else:
+            Distance = float(fullDistance[:-2])
         return Distance
         
     def setMisc(self, reportedMisc):
@@ -106,19 +110,4 @@ class ReportLocation:
     #Returns the full address
     def getAddress(self):
         return self.fullAddress
-
-"""
-def main():
-    #instantiate and get user's entered address
-    location_of_Incident=('Kimmel Center for University LIfe')
-    NewReportLoc = ReportLocation(location_of_Incident)
-    print(NewReportLoc.getAddress())
-     #How far the incident is from another location
-    #NewReportLoc.DistanceFrom("")
-
-    #What is the address that was saved
-    #NewReportLoc.getAddress()
-
-
-main()
-"""
+ 
