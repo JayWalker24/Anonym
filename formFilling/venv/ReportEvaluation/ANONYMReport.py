@@ -28,12 +28,12 @@ class ANONYMReport:
 
         self.DateError=""
         self.TimeError=""
+        self.DuplicateError=""
 
         
         if(jsonfile!=None):
             self.readJson(jsonfile)
             self.checkLogic()
-
             self.json_Assess()
             
     def json_Assess(self):
@@ -54,6 +54,14 @@ class ANONYMReport:
             with open(self.title, "w") as f:
                 json.dump(data,f)
 
+        if(self.DuplicateError!=""):
+            print(self.DuplicateError)
+            with open(self.title) as outfile:
+                data = json.load(outfile)
+                previous = data["crime_description"]
+                data["crime_description"] = self.DuplicateError+previous
+            with open(self.title, "w") as f:
+                json.dump(data,f)
                 
     def setJsonFile(self,jsonfile):
         self.readJson(jsonfile)
@@ -77,7 +85,7 @@ class ANONYMReport:
             #Checking logicality
             self.CheckDateTime()
             self.CheckLocation()
-            #self.isDuplicate()
+            self.isDuplicate()
         
     def CheckLocation(self):
        #Address from API
@@ -113,7 +121,8 @@ class ANONYMReport:
             TextGrade = TD.TextGrader((self.crimeDescription+" "+self.suspectDescription), DB_description)
             LocationGrade = self.NormalizeLocation(DB_location)
             if(TextGrade+LocationGrade>0.80):
-                message = "A Likely Duplicate"
+                message = "  A Likely Duplicate:  "
+                self.DuplicateError+=message
                 self.errorHandler(message)
 
             
