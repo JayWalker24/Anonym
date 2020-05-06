@@ -59,6 +59,11 @@ def processMessage():
         question = response.get('sendMessage').get('message')
         answer = send(question)
         return jsonify({"answer":answer})
+        
+@app.route("/download", methods=['GET'])
+def downloadFile():
+    if request.method == 'GET':
+        return send_file('merged_form.pdf', attachment_filename='report.pdf')
 
 
 
