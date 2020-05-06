@@ -5,6 +5,10 @@ import pdfrw
 import sys
 import json
 #import pypdftk
+from datetime import datetime
+import boto3
+from boto3.s3.transfer import S3Transfer
+
 from reportlab.pdfgen import canvas
 
 from ReportEvaluation.ANONYMReport import ANONYMReport
@@ -113,5 +117,11 @@ def createReport(report):
     merge_pdfs('policeReport.pdf',
                'simple_form_overlay.pdf',
                'merged_form.pdf')
+    #upload to s3
+    filename = datetime.now().strftime("%d/%m/%Y %H:%M:%S.pdf") 
+    s3 = boto3.client('s3')
+    s3.upload_file(Bucket='anonym-bucket', Key = ('anonym-reports/' + filename), "./merged_form.pdf")
+    s3.upload_file(Bucket='anonym-bucket', Key = ('anonym-jsons/' + filename), "./report.json")
+
     #pypdftk.fill_form('merged_form.pdf', out_file='merged_form_final.pdf', flatten=True)
 

@@ -1,8 +1,8 @@
 import json
 import datetime
-
+import boto3
 from ANONYMLocation import ReportLocation
-
+import os
 import TestDuplicates as TD
 
 class ANONYMReport:
@@ -99,14 +99,22 @@ class ANONYMReport:
         return LocationGrade/2
          
     def isDuplicate(self):
-        ## for i in reports submitted
-        message=""
-        DB_location, DB_time, DB_description = TD.readJson("report2.json")
-        TextGrade = TD.TextGrader((self.crimeDescription+" "+self.suspectDescription), DB_description)
-        LocationGrade = self.NormalizeLocation(DB_location)
-        if(TextGrade+LocationGrade>0.80):
-            message = "A Likely Duplicate"
-            self.errorHandler(message)
+        jsonlst = []
+        s3 = boto3.resource('s3')
+        my_bucket = s3.Bucket("anonym-json-bucket")
+        for s3obj in my_bucket.objects.all():
+            filename = s3obj.key
+            my_bucket.download_file(s3obj.key, filename)
+            jsonlst.append(filename)
+
+        for i in jsonlst:
+            message=""
+            DB_location, DB_time, DB_description = TD.readJson(i)
+            TextGrade = TD.TextGrader((self.crimeDescription+" "+self.suspectDescription), DB_description)
+            LocationGrade = self.NormalizeLocation(DB_location)
+            if(TextGrade+LocationGrade>0.80):
+                message = "A Likely Duplicate"
+                self.errorHandler(message)
 
             
     def timeHandler(self,time):
