@@ -8,6 +8,7 @@ import TestDuplicates as TD
 class ANONYMReport:
     
     def __init__(self,jsonfile=None):
+        self.title = jsonfile
         #Calling ANONYM location class
         self.locService = ReportLocation()
         
@@ -23,32 +24,60 @@ class ANONYMReport:
         #When the report was filed
         self.dateofReport=None
         self.timeofReport=None
+        
+
+        self.DateError=""
+        self.TimeError=""
 
         
         if(jsonfile!=None):
             self.readJson(jsonfile)
             self.checkLogic()
+
+            self.json_Assess()
             
-        
+    def json_Assess(self):
+        if(self.DateError!=""):
+            print(self.DataError)
+            with open(self.title) as outfile:
+                data = json.load(outfile)
+                data["date_crime"] +=self.DateError
+            with open(self.title, "w") as f:
+                json.dump(data,f)
+
+                
+        if(self.TimeError!=""):
+            print(self.TimeError)
+            with open(self.title) as outfile:
+                data = json.load(outfile)
+                data["time_crime"]+=self.TimeError
+            with open(self.title, "w") as f:
+                json.dump(data,f)
+
+                
     def setJsonFile(self,jsonfile):
         self.readJson(jsonfile)
         self.checkLogic()
+        self.json_Assess()
 
+    
     def CheckDateTime(self):
     
         if(self.dateofIncident>self.dateofReport):
-            Message = "ERROR!! Impossible the date of the crime is newer than the report"
+            Message = "  The crime is newer than the report"
+            self.DateError+=Message
             self.errorHandler(Message)
-            
+        print(self.dateofIncident, self.dateofReport)
         if(self.dateofIncident==self.dateofReport and self.timeofReport<self.timeofIncident):
-                Message ="ERROR!! Impossible, the time of the crime is newer than the time of the report"
+                Message ="  Time of the crime is newer than the time of the report"
+                self.TimeError+=Message
                 self.errorHandler(Message)
                 
     def checkLogic(self):
             #Checking logicality
             self.CheckDateTime()
             self.CheckLocation()
-           #self.isDuplicate()
+            #self.isDuplicate()
         
     def CheckLocation(self):
        #Address from API
@@ -57,7 +86,7 @@ class ANONYMReport:
        reportedAddress = self.locService.getAddress()
        if(reportedAddress != self.locationofIncident):
            Message = "Warning is this the address: "+ reportedAddress
-           self.errorHandler(Message)
+           #self.errorHandler(Message)
 
     def NormalizeLocation(self,DB_location):
         rdistance = TD.Noself.locService.DistanceFrom(DB_location)
@@ -74,12 +103,12 @@ class ANONYMReport:
         message=""
         DB_location, DB_time, DB_description = TD.readJson("report2.json")
         TextGrade = TD.TextGrader((self.crimeDescription+" "+self.suspectDescription), DB_description)
-        LocationGrade = TD.NormalizeLocation(self.locService.DistanceFrom(DB_location))
-        print(TextGrade,LocationGrade)
+        LocationGrade = self.NormalizeLocation(DB_location)
         if(TextGrade+LocationGrade>0.80):
             message = "A Likely Duplicate"
             self.errorHandler(message)
-                    
+
+            
     def timeHandler(self,time):
      
         colon = time.index(":")
@@ -98,8 +127,11 @@ class ANONYMReport:
         year = int(date[-4:])
       
         return datetime.date(year,month,day)
+    
     def readJson(self,jsonfile):
-            
+            print("aedsg", jsonfile)
+
+    def readJson(self,jsonfile):
             file= open(jsonfile,)
             data = json.load(file)
             for i in data:
@@ -117,12 +149,12 @@ class ANONYMReport:
                     self.timeofReport = self.timeHandler(data[i])
                 elif(i=="location_crime"):
                     self.locationofIncident = data[i]
+
             file.close()
+
+            
             
     def errorHandler(self,message):
         print(message)
 
- 
-    
-#  newReport = ANONYMReport(JsonReport)
  
